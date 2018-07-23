@@ -23,14 +23,15 @@ const japanese = require("japanese")
 const devs = tlcfg.owner
 const ostb = require("os-toolbox");
 const langs = require("./langmap.json")
+const jsonConfigFileName = "./GUILDWEBINFO.json"
 
 var guildWebhookConfig;
-fs.exists("./GUILDWEBINFO.json", function (exists) {
+fs.exists(jsonConfigFileName, function (exists) {
   if (exists) {
-    guildWebhookConfig = require("./GUILDWEBINFO.json");
+    guildWebhookConfig = require(jsonConfigFileName);
   } else {
     guildWebhookConfig = [];
-    console.log("./GUILDWEBINFO.json: no such file");
+    console.log(jsonConfigFileName + " : no such file");
   }
 });
 
@@ -221,6 +222,7 @@ bot.on("messageCreate", async msg => {
       translate(string, { to: lang }).then((res) => {
         res.text = res.text.replace(/<@ /g, "<@");
         res.text = res.text.replace(/<@ /g, "<#");
+        res.text = res.text.replace(/<@! /g, "<@!");
         if (res.text.length > 200) {
           return msg.channel.createMessage(`${flag}\n${res.text}`);
         }
@@ -229,7 +231,7 @@ bot.on("messageCreate", async msg => {
             color: 0xFFFFFF, description: `${flag} ${res.text}`
           }
         });
-      }).catch(err => { console.error(err) });
+      }).catch(err => { console.log("String :: " + string + "\n Lang : " + lang + "\n" );console.error(err) });
     }
     function funTranslation(text, emoji) {
       if (text == "" || text == null || text == undefined || text.includes("<!DOCTYPE")) return msg.channel.createMessage("Translation failed.");
@@ -245,7 +247,7 @@ bot.on("messageCreate", async msg => {
       if (string == "" || string == null || string == undefined) return msg.channel.createMessage("Nothing to analyze!");
       translate(string).then((res) => {
         return msg.channel.createMessage({ embed: { color: 0xFFFFFF, fields: [{ name: "Detected Language", value: lang[res.from.language.iso] }] } })
-      }).catch(err => { console.error(err) });
+      }).catch(err => { console.log("String :: " + string + "\n" );console.error(err) });
     }
   }
 
@@ -271,8 +273,8 @@ bot.on("messageCreate", async msg => {
             console.log("configuration chagne : " + guildObject);
 
 
-            fs.unlink(`GUILDWEBINFO.json`, async (err1) => {
-              fs.writeFile(`GUILDWEBINFO.json`, JSON.stringify(guildWebhookConfig), async (err) => {
+            fs.writeFile(jsonConfigFileName, JSON.stringify(""), async (err1) => {
+              fs.writeFile(jsonConfigFileName, JSON.stringify(guildWebhookConfig), async (err) => {
                 if (err) {
                   msg.channel.createMessage("Error while processing guild information.")
                 } else {
@@ -348,8 +350,8 @@ bot.on("messageCreate", async msg => {
               discordweb.userName = `${msg.author.username}#${msg.author.discriminator}`;
               discordweb.avatarUrl = msg.author.avatarURL ? msg.author.avatarURL : msg.author.defaultAvatarURL;
               discordweb.sendMessage(`This is a test message. Bot configured successfully. :D`);
-              await fs.unlink(`GUILDWEBINFO.json`, async (err1) => {
-                await fs.writeFile(`GUILDWEBINFO.json`, JSON.stringify(guildWebhookConfig), async (err) => {
+              await fs.unlink(jsonConfigFileName, async (err1) => {
+                await fs.writeFile(jsonConfigFileName, JSON.stringify(guildWebhookConfig), async (err) => {
                   if (err) {
                     console.log(err)
                     await msg.channel.createMessage("Error while processing guild information.")
@@ -466,7 +468,7 @@ bot.on("messageCreate", async msg => {
               }
             });
           }
-        }).catch(err => console.error(err));
+        }).catch(err => { console.log("String :: " + string + "\n" ); console.error(err)} );
       }
     }
   }
