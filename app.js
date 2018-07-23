@@ -134,7 +134,17 @@ bot.on("messageReactionAdd", async (msg, emoji, userid) => {
             color: 0xFFFFFF, description: `${flag} ${res.text}`
           }
         });
-      }).catch(err => { console.error(err) });
+      }).catch(err => {  
+        msg.channel.createMessage({
+          embed: {
+            color: 0xFF0000,
+            fields: [{
+              name : "Error",
+              value : "We have technical difficulties with the translation server and we have recorded the error. Team is working on it. Expect some maintenance and temporary outage..\nCode : "+ err.code
+            }]
+          }
+        });
+        console.error(err) });
     }
 
     function funTranslation(text, emoji) {
@@ -247,7 +257,17 @@ bot.on("messageCreate", async msg => {
       if (string == "" || string == null || string == undefined) return msg.channel.createMessage("Nothing to analyze!");
       translate(string).then((res) => {
         return msg.channel.createMessage({ embed: { color: 0xFFFFFF, fields: [{ name: "Detected Language", value: lang[res.from.language.iso] }] } })
-      }).catch(err => { console.log("String :: " + string + "\n" );console.error(err) });
+      }).catch(err => { 
+        msg.channel.createMessage({
+          embed: {
+            color: 0xFF0000,
+            fields: [{
+              name : "Error",
+              value : "We have technical difficulties with the translation server and we have recorded the error. Team is working on it. Expect some maintenance and temporary outage..\nCode : "+ err.code
+            }]
+          }
+        });
+        console.error(err) });
     }
   }
 
@@ -468,7 +488,16 @@ bot.on("messageCreate", async msg => {
               }
             });
           }
-        }).catch(err => { console.log("String :: " + string + "\n" ); console.error(err)} );
+        }).catch(err => { msg.channel.createMessage({
+          embed: {
+            color: 0xFF0000,
+            fields: [{
+              name : "Error",
+              value : "We have technical difficulties with the translation server and we have recorded the error. Team is working on it. Expect some maintenance and temporary outage..\nCode : "+ err.code
+            }]
+          }
+        });
+         console.error(err)} );
       }
     }
   }
