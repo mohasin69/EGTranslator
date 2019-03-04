@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TannerReynolds/Translation-Bot.git"
+    "url": "git+https://github.com/"
   },
   "keywords": [
     "Translate"
@@ -16,10 +16,11 @@
   "author": "TannerReynolds",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/TannerReynolds/Translation-Bot/issues"
+    "url": "https://github.com/"
   },
-  "homepage": "https://github.com/TannerReynolds/Translation-Bot#readme",
+  "homepage": "https://github.com/",
   "dependencies": {
+    "@vitalets/google-translate-api": "github:vitalets/google-translate-api",
     "discord-bot-webhook": "^1.0.4",
     "emoji-flags": "^1.2.0",
     "eris": "^0.7.2",
