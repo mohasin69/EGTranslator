@@ -510,8 +510,8 @@ bot.on("messageCreate", async msg => {
 
   async function invite() {
     let adminRole = [];
-    //msg.channel.createMessage(`https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=2146958591`)
-    msg.channel.createMessage(`Contact ZΞRO™ from ✯THΞ✯ΛGΞNTZ✯™ clan. Official clan website http://theagentz.dx.am/`)
+    msg.channel.createMessage(`https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=2146958591`)
+    //msg.channel.createMessage(`Contact ZΞRO™ from ✯THΞ✯ΛGΞNTZ✯™ clan. Official clan website http://theagentz.dx.am/`)
     // msg.channel.guild.roles.forEach(function(value,key){
     //     if( ALLOWED_ROLES.indexOf(value.name ) != -1)
     //     {
