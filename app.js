@@ -720,7 +720,7 @@ bot.on("messageCreate", async msg => {
       [
           { name: "From Developers", value: "Hello "+ msg.author.mention +", \n\tWe are grateful that you showed interest to become a important part of BOT family. We value each donation whatever you contribute and in return we listen your feedbacks and suggestions on priority.\n\tWe want to keep it free, but the server comes with a cost. Please feel free, and follow the below link to promote us and help us keep running this bot." },
           {name : "Features", value : "\nWe are in process of giving exclusive access to our features only to PATREONS. THEY DESERVE IT."},
-          {name : "Our Valued Users", value:"\n\t1. <@350607306997628938>" },
+          {name : "Our Valued Users", value:"\n\t1. <@350607306997628938> \n\t2. <@385624504963039233>" },
           { name : "Become our valuable PATREON : ", value : "https://www.patreon.com/OrangeFoxBot"}
       ], 
       color: 0x008800
@@ -729,7 +729,10 @@ bot.on("messageCreate", async msg => {
   }
 
   async function sendToAllGuilds(stringArgs) {
-    if (!devs.includes(msg.author.id)) return
+    if (!devs.includes(msg.author.id)) 
+    {
+      return msg.channel.createMessage("You don't have permissions to use this command!");
+    }
     //return msg.channel.createMessage("This command is under development!");
     if (stringArgs == "" || stringArgs == null || stringArgs == undefined) return msg.channel.createMessage("Nothing to send!");
 
@@ -737,7 +740,8 @@ bot.on("messageCreate", async msg => {
     //if( 1 == DEBUG )
     {
       var guild;
-      console.log(guildList);
+      if( 1 == DEBUG )
+           console.log(guildList);
       try {
         for (guild in guildList) {
           guild.defaultChannel.send(stringArgs);
