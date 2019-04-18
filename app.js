@@ -11,7 +11,8 @@ const DEBUG = process.env.DEBUG;
 const fs = require("fs")
 const Eris = require("eris")
 const OS = require("os")
-const translate = require("google-translate-api")
+//const translate = require("google-translate-api")
+const translate = require('@vitalets/google-translate-api');
 const lang = require("./langs.json")
 const bot = new Eris(tlcfg.token, { maxShards: "auto", getAllUsers: true })
 const prefix = tlcfg.prefix;
@@ -23,14 +24,15 @@ const japanese = require("japanese")
 const devs = tlcfg.owner
 const ostb = require("os-toolbox");
 const langs = require("./langmap.json")
+const jsonConfigFileName = "./GUILDWEBINFO.json"
 
 var guildWebhookConfig;
-fs.exists("./GUILDWEBINFO.json", function (exists) {
+fs.exists(jsonConfigFileName, function (exists) {
   if (exists) {
-    guildWebhookConfig = require("./GUILDWEBINFO.json");
+    guildWebhookConfig = require(jsonConfigFileName);
   } else {
     guildWebhookConfig = [];
-    console.log("./GUILDWEBINFO.json: no such file");
+    console.log(jsonConfigFileName + " : no such file");
   }
 });
 
@@ -221,6 +223,7 @@ bot.on("messageCreate", async msg => {
       translate(string, { to: lang }).then((res) => {
         res.text = res.text.replace(/<@ /g, "<@");
         res.text = res.text.replace(/<@ /g, "<#");
+        res.text = res.text.replace(/<@! /g, "<@!");
         if (res.text.length > 200) {
           return msg.channel.createMessage(`${flag}\n${res.text}`);
         }
@@ -229,7 +232,7 @@ bot.on("messageCreate", async msg => {
             color: 0xFFFFFF, description: `${flag} ${res.text}`
           }
         });
-      }).catch(err => { console.error(err) });
+      }).catch(err => { console.log("String :: " + string + "\n Lang : " + lang + "\n" );console.error(err) });
     }
     function funTranslation(text, emoji) {
       if (text == "" || text == null || text == undefined || text.includes("<!DOCTYPE")) return msg.channel.createMessage("Translation failed.");
@@ -245,7 +248,7 @@ bot.on("messageCreate", async msg => {
       if (string == "" || string == null || string == undefined) return msg.channel.createMessage("Nothing to analyze!");
       translate(string).then((res) => {
         return msg.channel.createMessage({ embed: { color: 0xFFFFFF, fields: [{ name: "Detected Language", value: lang[res.from.language.iso] }] } })
-      }).catch(err => { console.error(err) });
+      }).catch(err => { console.log("String :: " + string + "\n" );console.error(err) });
     }
   }
 
@@ -271,8 +274,8 @@ bot.on("messageCreate", async msg => {
             console.log("configuration chagne : " + guildObject);
 
 
-            fs.unlink(`GUILDWEBINFO.json`, async (err1) => {
-              fs.writeFile(`GUILDWEBINFO.json`, JSON.stringify(guildWebhookConfig), async (err) => {
+            fs.writeFile(jsonConfigFileName, JSON.stringify(""), async (err1) => {
+              fs.writeFile(jsonConfigFileName, JSON.stringify(guildWebhookConfig), async (err) => {
                 if (err) {
                   msg.channel.createMessage("Error while processing guild information.")
                 } else {
@@ -348,8 +351,8 @@ bot.on("messageCreate", async msg => {
               discordweb.userName = `${msg.author.username}#${msg.author.discriminator}`;
               discordweb.avatarUrl = msg.author.avatarURL ? msg.author.avatarURL : msg.author.defaultAvatarURL;
               discordweb.sendMessage(`This is a test message. Bot configured successfully. :D`);
-              await fs.unlink(`GUILDWEBINFO.json`, async (err1) => {
-                await fs.writeFile(`GUILDWEBINFO.json`, JSON.stringify(guildWebhookConfig), async (err) => {
+              await fs.unlink(jsonConfigFileName, async (err1) => {
+                await fs.writeFile(jsonConfigFileName, JSON.stringify(guildWebhookConfig), async (err) => {
                   if (err) {
                     console.log(err)
                     await msg.channel.createMessage("Error while processing guild information.")
@@ -466,7 +469,7 @@ bot.on("messageCreate", async msg => {
               }
             });
           }
-        }).catch(err => console.error(err));
+        }).catch(err => { console.log("String :: " + string + "\n" ); console.error(err)} );
       }
     }
   }
@@ -508,7 +511,7 @@ bot.on("messageCreate", async msg => {
   async function invite() {
     let adminRole = [];
     msg.channel.createMessage(`https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=2146958591`)
-
+    //msg.channel.createMessage(`Contact ZΞRO™ from ✯THΞ✯ΛGΞNTZ✯™ clan. Official clan website http://theagentz.dx.am/`)
     // msg.channel.guild.roles.forEach(function(value,key){
     //     if( ALLOWED_ROLES.indexOf(value.name ) != -1)
     //     {
@@ -713,11 +716,23 @@ bot.on("messageCreate", async msg => {
   }
 
   async function patreon() {
-    msg.channel.createMessage("```css\nHere is a link to our patreon, where you can support our developments and keep us running the bot!``` \nhttps://www.patreon.com/OrangeFoxBot")
+    msg.channel.createMessage({embed:{fields: 
+      [
+          { name: "From Developers", value: "Hello "+ msg.author.mention +", \n\tWe are grateful that you showed interest to become a important part of BOT family. We value each donation whatever you contribute and in return we listen your feedbacks and suggestions on priority.\n\tWe want to keep it free, but the server comes with a cost. Please feel free, and follow the below link to promote us and help us keep running this bot." },
+          {name : "Features", value : "\nWe are in process of giving exclusive access to our features only to PATREONS. THEY DESERVE IT."},
+          {name : "Our Valued Users", value:"\n\t1. <@350607306997628938> \n\t2. <@385624504963039233>" },
+          { name : "Become our valuable PATREON : ", value : "https://www.patreon.com/OrangeFoxBot"}
+      ], 
+      color: 0x008800
+     }
+});
   }
 
   async function sendToAllGuilds(stringArgs) {
-    if (!devs.includes(msg.author.id)) return
+    if (!devs.includes(msg.author.id)) 
+    {
+      return msg.channel.createMessage("You don't have permissions to use this command!");
+    }
     //return msg.channel.createMessage("This command is under development!");
     if (stringArgs == "" || stringArgs == null || stringArgs == undefined) return msg.channel.createMessage("Nothing to send!");
 
@@ -725,7 +740,8 @@ bot.on("messageCreate", async msg => {
     //if( 1 == DEBUG )
     {
       var guild;
-      console.log(guildList);
+      if( 1 == DEBUG )
+           console.log(guildList);
       try {
         for (guild in guildList) {
           guild.defaultChannel.send(stringArgs);
