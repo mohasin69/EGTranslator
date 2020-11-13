@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/",
   "dependencies": {
-    "@matheuss/google-translate-api": "github:matheuss/google-translate-api",
+    "@vitalets/google-translate-api": "github:vitalets/google-translate-api",
     "discord-bot-webhook": "^1.0.4",
     "emoji-flags": "^1.2.0",
     "eris": "^0.7.2",
