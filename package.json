@@ -1,6 +1,6 @@
 {
   "name": "translate-bot",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Translates messages to tons of different languages",
   "main": "app.js",
   "scripts": {
@@ -13,14 +13,14 @@
   "keywords": [
     "Translate"
   ],
-  "author": "TannerReynolds",
+  "author": "ZERO",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/"
   },
   "homepage": "https://github.com/",
   "dependencies": {
-    "@matheuss/google-translate-api":"github:matheuss/google-translate-api",
+    "@matheuss/google-translate-api": "github:matheuss/google-translate-api",
     "discord-bot-webhook": "^1.0.4",
     "emoji-flags": "^1.2.0",
     "eris": "^0.7.2",
