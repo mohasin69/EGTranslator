@@ -176,7 +176,7 @@ bot.on("messageCreate", async msg => {
   if (msg.content.toLowerCase().indexOf(prefix) !== 0)
   {
 	switch(msg.channel.type) {
-		case "dm":
+		case 1:
 		  if (msg.content.includes("help")) {
 			msg.channel.send("Enter your steam profile URL to get your steam ID. It should look like so: `https://steamcommunity.com/id/your_profile_name/`");
 		  }
