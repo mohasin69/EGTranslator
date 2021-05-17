@@ -30,6 +30,8 @@
     "japanese": "^1.2.0",
     "kpop": "^0.1.2",
     "os-toolbox": "^0.2.9",
-    "to-zalgo": "^1.0.1"
+    "to-zalgo": "^1.0.1",
+    "node-fetch": "^2.1.2",
+    "discord.js": "^11.3.2"
   }
 }

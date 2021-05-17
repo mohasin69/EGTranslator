@@ -21,6 +21,7 @@ const zalgo = require("to-zalgo")
 const flip = require("flipout")
 const kpop = require("kpop")
 const japanese = require("japanese")
+const fetch = require('node-fetch');
 const devs = tlcfg.owner
 const ostb = require("os-toolbox");
 const langs = require("./langmap.json")
