@@ -159,38 +159,6 @@ bot.on("messageReactionAdd", async (msg, emoji, userid) => {
   }); // End of getMessageOfReaction
 }); // ENd of messageReactionAdd
 
-bot.on("message", async msg => {
-
-  console.log("msg.channel.type");
-  console.log(msg.channel.type);
-  msg.channel.createMessage('text')
-  switch(msg.channel.type) {
-    case "dm":
-      if (msg.content.includes("help")) {
-        msg.channel.send("Enter your steam profile URL to get your steam ID. It should look like so: `https://steamcommunity.com/id/your_profile_name/`");
-      }
-      
-      if (msg.content.includes("https://steamcommunity.com/id") && !msg.content.includes("your_profile_name")) {
-        const url = msg.content.concat("?xml=1");
-        try {
-          const resp = await fetch(url);
-          const text = await resp.text();
-          const doc = new DOMParser().parseFromString(text);
-          const ele = doc.documentElement.getElementsByTagName("steamID64");
-          const steamID = ele.item(0).firstChild.nodeValue;
-          msg.channel.send(`Your steam id: ${steamID}`);
-        } catch (error) {
-          console.log(error);
-          msg.channel.send("An error occurred retrieving your steam id");
-        }
-      }
-  }
-
-  if (msg.isMentioned(client.user)) {
-    msg.channel.send('You must DM me your steam profile URL to receive your steam id');
-  }
-
-});
 
 bot.on("messageCreate", async msg => {
 
@@ -202,7 +170,8 @@ bot.on("messageCreate", async msg => {
   if (tsChannelsEnabled) tsChannels()
 
   
-
+	console.log(msg.channel.type);
+	console.log(msg.content.toLowerCase());
 
   if (msg.content.toLowerCase().indexOf(prefix) !== 0)
   {
