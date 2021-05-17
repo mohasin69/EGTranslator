@@ -159,35 +159,35 @@ bot.on("messageReactionAdd", async (msg, emoji, userid) => {
   }); // End of getMessageOfReaction
 }); // ENd of messageReactionAdd
 
-bot.on("message", async message => {
+bot.on("message", async msg => {
 
-  console.log("message.channel.type");
-  console.log(message.channel.type);
-  message.channel.send('in Message');
-  switch(message.channel.type) {
+  console.log("msg.channel.type");
+  console.log(msg.channel.type);
+  msg.channel.createMessage('text')
+  switch(msg.channel.type) {
     case "dm":
-      if (message.content.includes("help")) {
-        message.channel.send("Enter your steam profile URL to get your steam ID. It should look like so: `https://steamcommunity.com/id/your_profile_name/`");
+      if (msg.content.includes("help")) {
+        msg.channel.send("Enter your steam profile URL to get your steam ID. It should look like so: `https://steamcommunity.com/id/your_profile_name/`");
       }
       
-      if (message.content.includes("https://steamcommunity.com/id") && !message.content.includes("your_profile_name")) {
-        const url = message.content.concat("?xml=1");
+      if (msg.content.includes("https://steamcommunity.com/id") && !msg.content.includes("your_profile_name")) {
+        const url = msg.content.concat("?xml=1");
         try {
           const resp = await fetch(url);
           const text = await resp.text();
           const doc = new DOMParser().parseFromString(text);
           const ele = doc.documentElement.getElementsByTagName("steamID64");
           const steamID = ele.item(0).firstChild.nodeValue;
-          message.channel.send(`Your steam id: ${steamID}`);
+          msg.channel.send(`Your steam id: ${steamID}`);
         } catch (error) {
           console.log(error);
-          message.channel.send("An error occurred retrieving your steam id");
+          msg.channel.send("An error occurred retrieving your steam id");
         }
       }
   }
 
-  if (message.isMentioned(client.user)) {
-    message.channel.send('You must DM me your steam profile URL to receive your steam id');
+  if (msg.isMentioned(client.user)) {
+    msg.channel.send('You must DM me your steam profile URL to receive your steam id');
   }
 
 });
@@ -200,7 +200,7 @@ bot.on("messageCreate", async msg => {
 
   if (tsChannelsEnabled) tsChannels()
   if (msg.content.toLowerCase().indexOf(prefix) !== 0) return;
-  if (DEBUG) console.log(command + "prefix" + prefix)
+  if (DEBUG) console.log(command + " prefix - " + prefix)
   if (command.toLowerCase() === "help") return help()
   if (command.toLowerCase() === "eval") return evalcmd()
   if (command.toLowerCase() === "shards") return shards()
