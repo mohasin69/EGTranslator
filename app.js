@@ -161,6 +161,7 @@ bot.on("messageReactionAdd", async (msg, emoji, userid) => {
 
 bot.on("message", async message => {
 
+  console.log("message.channel.type");
   console.log(message.channel.type);
   message.channel.send('in Message');
   switch(message.channel.type) {
