@@ -193,10 +193,7 @@ bot.on("message", async msg => {
 });
 
 bot.on("messageCreate", async msg => {
-  console.log("msg.channel.type");
-  console.log(msg.channel.type);
-  msg.channel.createMessage('text')
-  
+
   if (msg.author.bot) return
   const tsChannelsEnabled = tlcfg.tsChannelsEnabled
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
