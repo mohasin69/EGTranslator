@@ -2,7 +2,7 @@
 # Translation Discord Bot
 ## Installation
 Before you download this bot, you must first install [nodejs version 9+](https://nodejs.org/en/download/current/)
-
+ 
 Once nodejs is installed, then download this bot by pressing this button
 
 ![Download Button](https://i.imgur.com/gTo8kUL.png)
