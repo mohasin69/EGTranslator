@@ -169,10 +169,6 @@ bot.on("messageCreate", async msg => {
 
   if (tsChannelsEnabled) tsChannels()
 
-  
-	console.log(msg.channel.type);
-	console.log(msg.content.toLowerCase());
-
   if (msg.content.toLowerCase().indexOf(prefix) !== 0)
   {
 	switch(msg.channel.type) {
