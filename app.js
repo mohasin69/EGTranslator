@@ -159,6 +159,33 @@ bot.on("messageReactionAdd", async (msg, emoji, userid) => {
   }); // End of getMessageOfReaction
 }); // ENd of messageReactionAdd
 
+bot.on("message", async message => {
+
+  switch(message.channel.type) {
+    case "dm":
+      if (message.content.includes("help")) {
+        message.channel.send("Enter your steam profile URL to get your steam ID. It should look like so: `https://steamcommunity.com/id/your_profile_name/`");
+      }
+      
+      if (message.content.includes("https://steamcommunity.com/id") && !message.content.includes("your_profile_name")) {
+        const url = message.content.concat("?xml=1");
+        try {
+          const resp = await fetch(url);
+          const text = await resp.text();
+          const doc = new DOMParser().parseFromString(text);
+          const ele = doc.documentElement.getElementsByTagName("steamID64");
+          const steamID = ele.item(0).firstChild.nodeValue;
+          message.channel.send(`Your steam id: ${steamID}`);
+        } catch (error) {
+          console.log(error);
+          message.channel.send("An error occurred retrieving your steam id");
+        }
+      }
+  }
+
+  if (message.isMentioned(client.user)) {
+    message.channel.send('You must DM me your steam profile URL to receive your steam id');
+  }
 
 bot.on("messageCreate", async msg => {
   if (msg.author.bot) return
