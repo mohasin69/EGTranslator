@@ -187,6 +187,8 @@ bot.on("message", async message => {
     message.channel.send('You must DM me your steam profile URL to receive your steam id');
   }
 
+});
+
 bot.on("messageCreate", async msg => {
   if (msg.author.bot) return
   const tsChannelsEnabled = tlcfg.tsChannelsEnabled
