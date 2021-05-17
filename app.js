@@ -178,7 +178,7 @@ bot.on("messageCreate", async msg => {
 	switch(msg.channel.type) {
 		case 1:
 		  if (msg.content.includes("help")) {
-			msg.channel.send("Enter your steam profile URL to get your steam ID. It should look like so: `https://steamcommunity.com/id/your_profile_name/`");
+			msg.channel.createMessage("Enter your steam profile URL to get your steam ID. It should look like so: `https://steamcommunity.com/id/your_profile_name/`");
 		  }
 		  
 		  if (msg.content.includes("https://steamcommunity.com/id") && !msg.content.includes("your_profile_name")) {
@@ -189,10 +189,10 @@ bot.on("messageCreate", async msg => {
 			  const doc = new DOMParser().parseFromString(text);
 			  const ele = doc.documentElement.getElementsByTagName("steamID64");
 			  const steamID = ele.item(0).firstChild.nodeValue;
-			  msg.channel.send(`Your steam id: ${steamID}`);
+			  msg.channel.createMessage(`Your steam id: ${steamID}`);
 			} catch (error) {
 			  console.log(error);
-			  msg.channel.send("An error occurred retrieving your steam id");
+			  msg.channel.createMessage("An error occurred retrieving your steam id");
 			}
 		  }
 		default : return;
